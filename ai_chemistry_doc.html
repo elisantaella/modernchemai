@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On Chemistry's Modern AI Technology</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #252525;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #f0f0f0;
+            --text-secondary: #c0c0c0;
+            --accent-primary: #5c6bc0;
+            --accent-secondary: #7986cb;
+            --highlight: #8e24aa;
+            --highlight-light: #ab47bc;
+            --success: #43a047;
+            --warning: #fb8c00;
+            --info: #0288d1;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --transition-standard: all 0.3s ease;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition-standard);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6, author {
+            margin-bottom: 1rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--accent-primary), var(--highlight));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--accent-secondary);
+            border-bottom: 1px solid var(--accent-secondary);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+        }
+        
+
+        h4 {
+            font-size: 1.25rem;
+            color: var(--accent-secondary);
+        }
+
+        p, ul, ol {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        a {
+            color: var(--accent-secondary);
+            text-decoration: none;
+            transition: var(--transition-standard);
+        }
+
+        a:hover {
+            color: var(--highlight-light);
+            text-decoration: underline;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--bg-tertiary);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--accent-primary);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        /* Layout */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: var(--bg-secondary);
+            padding: 2rem 1rem;
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            border-right: 1px solid #333;
+            transition: var(--transition-standard);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Sidebar Navigation */
+        .nav-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav-logo svg {
+            width: 60px;
+            height: 60px;
+        }
+
+        .nav-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .nav-item {
+            padding: 0.5rem 0;
+            cursor: pointer;
+            transition: var(--transition-standard);
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+        }
+
+        .nav-item:hover {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.05);
+            padding-left: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-secondary);
+            font-weight: 500;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding-left: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .nav-item i {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Components */
+        .card {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: var(--transition-standard);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-badge {
+            background-color: var(--accent-primary);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .expand-button {
+            background: none;
+            border: none;
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+            transition: var(--transition-standard);
+        }
+
+        .expand-button:hover {
+            color: var(--highlight);
+        }
+
+        .expand-button i {
+            margin-left: 0.25rem;
+            transition: var(--transition-standard);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: rgba(92, 107, 192, 0.2);
+            color: var(--accent-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Grid system */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--accent-primary);
+            cursor: help;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            text-align: center;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            width: 200px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .alert i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .alert-info {
+            background-color: rgba(2, 136, 209, 0.1);
+            border-left: 4px solid var(--info);
+            color: var(--info);
+        }
+
+        .alert-warning {
+            background-color: rgba(251, 140, 0, 0.1);
+            border-left: 4px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .alert-success {
+            background-color: rgba(67, 160, 71, 0.1);
+            border-left: 4px solid var(--success);
+            color: var(--success);
+        }
+
+        /* Tabs */
+        .tabs {
+            margin-bottom: 2rem;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition-standard);
+        }
+
+        .tab-button:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-button.active {
+            color: var(--accent-primary);
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .animate-slideInRight {
+            animation: slideInRight 0.5s ease forwards;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+            color: var(--accent-primary);
+        }
+
+        /* Progress bars */
+        .progress-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--accent-primary), var(--highlight));
+            border-radius: 4px;
+            width: 0;
+            transition: width 1s ease;
+        }
+
+        /* Feature list */
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon {
+            color: var(--accent-primary);
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-image {
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            background-color: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-standard);
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Example code */
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 5px 5px 0 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .code-block {
+            margin-bottom: 1.5rem;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .code-block pre {
+            margin-bottom: 0;
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            background-color: var(--bg-secondary);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-tertiary);
+        }
+
+        th {
+            background-color: rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Interactive visualization placeholder */
+        .visualization {
+            height: 400px;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Molecule animation */
+        .molecule {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .atom {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .carbon {
+            background-color: #444;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .oxygen {
+            background-color: #f44336;
+            box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+        }
+
+        .hydrogen {
+            background-color: #03a9f4;
+            box-shadow: 0 0 10px rgba(3, 169, 244, 0.5);
+            width: 20px;
+            height: 20px;
+        }
+
+        .nitrogen {
+            background-color: #3f51b5;
+            box-shadow: 0 0 10px rgba(63, 81, 181, 0.5);
+        }
+
+        .bond {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.3);
+            height: 5px;
+            transform-origin: 0 50%;
+        }
+
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .collapsible-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-header.active i {
+            transform: rotate(180deg);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+                transform: translateX(-100%);
+                position: fixed;
+                z-index: 999;
+                width: 80%;
+                max-width: 300px;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .nav-logo {
+                display: none;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Menu toggle for mobile */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            background-color: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <aside class="sidebar" id="sidebar">
+            <div class="nav-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#5c6bc0" stroke-width="2"/>
+                    <circle cx="30" cy="40" r="10" fill="#7986cb"/>
+                    <circle cx="60" cy="30" r="7" fill="#5c6bc0"/>
+                    <circle cx="70" cy="60" r="12" fill="#3949ab"/>
+                    <circle cx="40" cy="70" r="8" fill="#9fa8da"/>
+                    <path d="M30,40 L60,30 L70,60 L40,70 Z" fill="none" stroke="#3949ab" stroke-width="2" stroke-dasharray="5,3"/>
+                </svg>
+            </div>
+
+            <div class="nav-title">AI in Chemistry</div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Introduction</div>
+                <div class="nav-item active" data-target="introduction">
+                    <i class="fas fa-home"></i> Overview
+                </div>
+              <!--  <div class="nav-item" data-target="evolution">
+                    <i class="fas fa-history"></i> Evolution of AI in Chemistry
+                </div>-->
+            </div>
+
+            <!--<div class="nav-section">
+                <div class="nav-section-title">Core Technologies</div>
+                <div class="nav-item" data-target="machine-learning">
+                    <i class="fas fa-cogs"></i> Machine Learning Basics
+                </div>
+                <div class="nav-item" data-target="deep-learning">
+                    <i class="fas fa-brain"></i> Deep Learning Models
+                </div>
+                <div class="nav-item" data-target="nlp">
+                    <i class="fas fa-language"></i> NLP in Chemistry
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Applications</div>
+                <div class="nav-item" data-target="drug-discovery">
+                    <i class="fas fa-pills"></i> Drug Discovery
+                </div>
+                <div class="nav-item" data-target="material-design">
+                    <i class="fas fa-atom"></i> Materials Design
+                </div>
+                <div class="nav-item" data-target="reaction-prediction">
+                    <i class="fas fa-flask"></i> Reaction Prediction
+                </div>
+                <div class="nav-item" data-target="property-prediction">
+                    <i class="fas fa-chart-line"></i> Property Prediction
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Advanced Topics</div>
+                <div class="nav-item" data-target="graph-neural">
+                    <i class="fas fa-project-diagram"></i> Graph Neural Networks
+                </div>
+                <div class="nav-item" data-target="reinforcement">
+                    <i class="fas fa-robot"></i> Reinforcement Learning
+                </div>
+                <div class="nav-item" data-target="generative">
+                    <i class="fas fa-magic"></i> Generative Models
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Case Studies</div>
+                <div class="nav-item" data-target="case-study-1">
+                    <i class="fas fa-microscope"></i> AlphaFold & Protein Folding
+                </div>
+                <div class="nav-item" data-target="case-study-2">
+                    <i class="fas fa-vial"></i> Catalyst Design
+                </div>
+                <div class="nav-item" data-target="case-study-3">
+                    <i class="fas fa-dna"></i> Molecular Docking
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Resources</div>
+                <div class="nav-item" data-target="tools">
+                    <i class="fas fa-tools"></i> Tools & Libraries
+                </div>
+                <div class="nav-item" data-target="datasets">
+                    <i class="fas fa-database"></i> Datasets
+                </div>
+                <div class="nav-item" data-target="further-reading">
+                    <i class="fas fa-book"></i> Further Reading
+                </div>
+            </div>-->
+        </aside>
+
+        <main class="main-content">
+            <section id="introduction" class="section visible">
+                <h1>On Chemistry's Modern AI Technology</h1>
+                                <h3>By Eli Santaella</h3>
+
+
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Interactive Documentation</strong>
+                        <p>This documentation features interactive elements. Click on section headers to expand content, hover over highlighted terms for definitions, and interact with the visualizations.</p>
+                    </div>
+                </div>
+
+                <p>The integration of artificial intelligence (AI) in chemistry has revolutionized how we understand, predict, and design chemical systems. This comprehensive documentation explores the cutting-edge AI technologies transforming the field of chemistry, from drug discovery to materials design.</p>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Why AI in Chemistry?</div>
+                        <div class="card-badge">Transformative</div>
+                    </div>
+                    <p>The chemical space is unimaginably vast, with estimates suggesting there are more potential drug-like molecules than atoms in the observable universe. Traditional methods can only explore a tiny fraction of this space.</p>
+                    <p>AI offers the potential to navigate this vast chemical space more efficiently and has already proven its worth in accelerating discoveries that would take decades using antiquated, conventional methods.</p>
+                    <div class="collapsible-header">
+                        <button class="expand-button">
+                            Learn more
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="expandable-content">
+                        <h4>Key Advantages of AI in Chemistry</h4>
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-bolt"></i></span>
+                                <div>
+                                    <strong>Acceleration of Research</strong>
+                                    <p>AI can perform in seconds what would take humans days or months by screening millions of potential compounds for desired properties.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-lightbulb"></i></span>
+                                <div>
+                                    <strong>Novel Discoveries</strong>
+                                    <p>AI can identify patterns and relationships that humans might miss; therefore, leading to unexpected discoveries and innovative approaches.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-search"></i></span>
+                                <div>
+                                    <strong>Exploration of Complex Chemical Space</strong>
+                                    <p>AI navigates through vast chemical spaces by identifying promising candidates that would be impossible to discover through traditional methods.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-dollar-sign"></i></span>
+                                <div>
+                                    <strong>Cost Reduction</strong>
+                                    <p>By reducing the need for expensive physical experiments, AI substantially decreases research and development costs.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="deep-learning" class="section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h2>Deep Learning Models in Chemistry</h2>
+                </div>
+
+                <p>Deep learning has transformed AI applications in chemistry by enabling the processing of raw chemical data without extensive feature engineering, discovering complex patterns, and generating novel chemical structures with desired properties.</p>
+
+                <div class="alert alert-success">
+                    <i class="fas fa-star"></i>
+                    <div>
+                        <strong>Key Advantage</strong>
+                        <p>Unlike traditional ML methods, deep neural networks can learn directly from molecular structures, automatically extracting relevant features and capturing complex non-linear relationships between structure and properties.</p>
+                    </div>
+                </div>
+
+                <h3>Neural Network Architectures for Chemistry</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h4>Convolutional Neural Networks (CNNs)</h4>
+                        <p>Adapted for chemistry to process grid-like representations of molecules (e.g., 2D or 3D voxelized structures).</p>
+                        <p><strong>Applications:</strong> Processing molecular images, analyzing electron density maps, and protein-ligand interactions.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Recurrent Neural Networks (RNNs)</h4>
+                        <p>Process sequential data like SMILES strings, treating molecules as sequences of atoms and bonds.</p>
+                        <p><strong>Applications:</strong> Molecular generation, SMILES validation, reaction prediction.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Transformer Models</h4>
+                        <p>Attention-based architectures that excel at capturing long-range dependencies in molecular sequences.</p>
+                        <p><strong>Applications:</strong> Property prediction, reaction modeling, molecular design.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Graph Neural Networks (GNNs)</h4>
+                        <p>Specialized networks designed to operate directly on molecular graphs, preserving structural information.</p>
+                        <p><strong>Applications:</strong> Property prediction, molecular generation, reaction mechanism elucidation.</p>
+                    </div>
+                </div>
+
+                <div class="visualization">
+                    <div style="text-align: center; padding: 20px;">
+                        <h4>Interactive Neural Network Visualization</h4>
+                        <p>Click on different parts of the network to see how they process molecular information.</p>
+                        <div id="nn-visualization" style="height: 300px; position: relative;">
+                            <!-- Neural network visualization will be added via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Deep Learning for Molecular Property Prediction</h3>
+                <p>One of the most successful applications of deep learning in chemistry has been predicting molecular properties:</p>
+
+                <div class="tabs">
+                    <div class="tabs-header">
+                        <button class="tab-button active" data-tab="physical-props">Physical Properties</button>
+                        <button class="tab-button" data-tab="biological-props">Biological Activity</button>
+                        <button class="tab-button" data-tab="admet">ADMET Properties</button>
+                    </div>
+                    <div id="physical-props" class="tab-content active">
+                        <p>Deep learning models can predict a wide range of physical and chemical properties:</p>
+                        <ul>
+                            <li>Solubility and LogP (lipophilicity)</li>
+                            <li>Melting and boiling points</li>
+                            <li>Chemical stability and reactivity</li>
+                            <li>Spectroscopic properties (NMR, IR spectra)</li>
+                            <li>Quantum mechanical properties (HOMO-LUMO gap, electron density)</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span>Python: Building a Property Prediction Model with PyTorch</span>
+                            </div>
+                            <pre><code class="language-python">
+import torch
+import torch.nn as nn
+from torch_geometric.nn import GCNConv, global_mean_pool
+
+class MolecularGCN(nn.Module):
+    def __init__(self, node_features, hidden_channels, num_tasks):
+        super(MolecularGCN, self).__init__()
+        self.conv1 = GCNConv(node_features, hidden_channels)
+        self.conv2 = GCNConv(hidden_channels, hidden_channels)
+        self.conv3 = GCNConv(hidden_channels, hidden_channels)
+        self.lin = nn.Linear(hidden_channels, num_tasks)
+        
+    def forward(self, x, edge_index, batch):
+        # Node feature embedding
+        x = self.conv1(x, edge_index)
+        x = x.relu()
+        x = self.conv2(x, edge_index)
+        x = x.relu()
+        x = self.conv3(x, edge_index)
+        
+        # Global pooling
+        x = global_mean_pool(x, batch)
+        
+        # Prediction
+        x = self.lin(x)
+        return x
+                            </code></pre>
+                        </div>
+                    </div>
+                    <div id="biological-props" class="tab-content">
+                        <p>Deep learning excels at predicting how molecules interact with biological targets:</p>
+                        
+                        <div class="grid">
+                            <div class="card">
+                                <h4>Target Binding Affinity</h4>
+                                <p>Predicting how strongly molecules bind to specific proteins, receptors, or enzymes.</p>
+                            </div>
+                            <div class="card">
+                                <h4>Bioactivity Classification</h4>
+                                <p>Classifying compounds as active or inactive against specific biological targets.</p>
+                            </div>
+                            <div class="card">
+                                <h4>Toxicity Prediction</h4>
+                                <p>Identifying potentially harmful interactions with biological systems.</p>
+                            </div>
+                            <div class="card">
+                                <h4>Selectivity Profiling</h4>
+                                <p>Predicting a molecule's activity across multiple targets to assess selectivity.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="admet" class="tab-content">
+                        <p>ADMET (Absorption, Distribution, Metabolism, Excretion, and Toxicity) properties are crucial for drug development:</p>
+                        
+                        <table>
+                            <tr>
+                                <th>ADMET Property</th>
+                                <th>Deep Learning Approach</th>
+                                <th>Impact on Drug Development</th>
+                            </tr>
+                            <tr>
+                                <td>Blood-Brain Barrier Permeability</td>
+                                <td>Graph neural networks with molecular descriptors</td>
+                                <td>Helps identify compounds that can (or cannot) reach the central nervous system</td>
+                            </tr>
+                            <tr>
+                                <td>Cytochrome P450 Interaction</td>
+                                <td>Multi-task learning across different CYP isoforms</td>
+                                <td>Predicts drug metabolism and potential drug-drug interactions</td>
+                            </tr>
+                            <tr>
+                                <td>hERG Channel Blocking</td>
+                                <td>Attention-based models with molecular fingerprints</td>
+                                <td>Identifies compounds with potential cardiac toxicity</td>
+                            </tr>
+                            <tr>
+                                <td>Oral Bioavailability</td>
+                                <td>Ensemble models combining multiple properties</td>
+                                <td>Predicts how well a drug will be absorbed when taken orally</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>Transfer Learning in Chemistry</h3>
+                <p>An increasingly important approach in chemical deep learning is transfer learning, where models pre-trained on large datasets are fine-tuned for specific tasks:</p>
+                
+                <div class="card">
+                    <h4 class="collapsible-header">
+                        Benefits of Transfer Learning
+                        <i class="fas fa-chevron-down"></i>
+                    </h4>
+                    <div class="expandable-content">
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-database"></i></span>
+                                <div>
+                                    <strong>Addressing Limited Data</strong>
+                                    <p>Enables accurate predictions even when task-specific data is scarce, which is common for novel chemical problems.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-bolt"></i></span>
+                                <div>
+                                    <strong>Faster Training</strong>
+                                    <p>Significantly reduces the time and computational resources needed to develop task-specific models.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-chart-line"></i></span>
+                                <div>
+                                    <strong>Improved Performance</strong>
+                                    <p>Models initialized with pre-trained weights often achieve higher accuracy than those trained from scratch.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <span class="feature-icon"><i class="fas fa-globe"></i></span>
+                                <div>
+                                    <strong>Generalization</strong>
+                                    <p>Pre-trained models capture general chemical knowledge that transfers well across multiple tasks.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p>Notable examples of pre-trained models in chemistry include:</p>
+                <ul>
+                    <li><strong>ChemBERTa</strong>: A BERT-like model trained on SMILES strings</li>
+                    <li><strong>MolCLR</strong>: Self-supervised learning for molecular representations</li>
+                    <li><strong>GROVER</strong>: Graph-based model pre-trained on large molecule datasets</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- Back to top button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Font Awesome (for icons) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Navigation functionality
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.section');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    
+                    // Hide all sections
+                    sections.forEach(section => {
+                        section.classList.remove('visible');
+                    });
+                    
+                    // Show target section
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        targetSection.classList.add('visible');
+                        
+                        // Update active nav item
+                        navItems.forEach(navItem => {
+                            navItem.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        
+                        // On mobile, close the sidebar after selection
+                        if (window.innerWidth <= 768) {
+                            document.getElementById('sidebar').classList.remove('active');
+                        }
+                        
+                        // Scroll to top of the section
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+            
+            // Expandable content
+            const expandButtons = document.querySelectorAll('.expand-button');
+            
+            expandButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    if (content && content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        if (icon) {
+                            icon.classList.remove('fa-chevron-up');
+                            icon.classList.add('fa-chevron-down');
+                        }
+                    } else if (content) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        if (icon) {
+                            icon.classList.remove('fa-chevron-down');
+                            icon.classList.add('fa-chevron-up');
+                        }
+                    }
+                });
+            });
+            
+            // Collapsible headers
+            const collapsibleHeaders = document.querySelectorAll('.collapsible-header');
+            
+            collapsibleHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    
+                    if (content && content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else if (content) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            });
+            
+            // Tabs functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    const tabContainer = this.closest('.tabs');
+                    
+                    // Hide all tab contents in this container
+                    tabContainer.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Deactivate all tab buttons in this container
+                    tabContainer.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Activate clicked tab and content
+                    this.classList.add('active');
+                    const targetTab = document.getElementById(tabId);
+                    if (targetTab) {
+                        targetTab.classList.add('active');
+                    }
+                });
+            });
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            if (backToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        backToTopButton.classList.add('visible');
+                    } else {
+                        backToTopButton.classList.remove('visible');
+                    }
+                });
+                
+                backToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+             // Intersection Observer for sections
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => {
+                if (section.id !== 'introduction') { // Skip introduction since it's visible by default
+                    observer.observe(section);
+                }
+            });
+
+            
+            // Neural Network Visualization
+            function createNeuralNetworkVisualization() {
+                const container = document.getElementById('nn-visualization');
+                if (!container) return;
+                
+                const layers = [
+                    { nodes: 4, name: 'Input Layer' },
+                    { nodes: 6, name: 'Hidden Layer 1' },
+                    { nodes: 6, name: 'Hidden Layer 2' },
+                    { nodes: 3, name: 'Output Layer' }
+                ];
+                
+                const containerWidth = container.offsetWidth;
+                const containerHeight = container.offsetHeight;
+                const horizontalSpacing = containerWidth / (layers.length + 1);
+                
+                // Create layer labels
+                layers.forEach((layer, layerIndex) => {
+                    const labelElement = document.createElement('div');
+                    labelElement.textContent = layer.name;
+                    labelElement.style.position = 'absolute';
+                    labelElement.style.top = '10px';
+                    labelElement.style.left = `${horizontalSpacing * (layerIndex + 1) - 40}px`;
+                    labelElement.style.fontSize = '0.8rem';
+                    labelElement.style.color = '#aaa';
+                    container.appendChild(labelElement);
+                });
+                
+                // Create nodes
+                layers.forEach((layer, layerIndex) => {
+                    const verticalSpacing = containerHeight / (layer.nodes + 1);
+                    
+                    for (let i = 0; i < layer.nodes; i++) {
+                        const nodeElement = document.createElement('div');
+                        nodeElement.classList.add('nn-node');
+                        nodeElement.style.position = 'absolute';
+                        nodeElement.style.width = '20px';
+                        nodeElement.style.height = '20px';
+                        nodeElement.style.borderRadius = '50%';
+                        nodeElement.style.backgroundColor = layerIndex === 0 ? '#5c6bc0' : 
+                                                          layerIndex === layers.length - 1 ? '#8e24aa' : '#7986cb';
+                        nodeElement.style.left = `${horizontalSpacing * (layerIndex + 1) - 10}px`;
+                        nodeElement.style.top = `${verticalSpacing * (i + 1) + 30}px`;
+                        nodeElement.style.transition = 'background-color 0.3s ease';
+                        
+                        // Add hover effect
+                        nodeElement.addEventListener('mouseover', function() {
+                            this.style.backgroundColor = '#ff5722';
+                            
+                            // Highlight connected edges
+                            if (layerIndex < layers.length - 1) {
+                                const nextLayerNodes = container.querySelectorAll(`.edge-from-${layerIndex}-${i}`);
+                                nextLayerNodes.forEach(edge => {
+                                    edge.style.backgroundColor = '#ff5722';
+                                    edge.style.opacity = '0.7';
+                                });
+                            }
+                            
+                            if (layerIndex > 0) {
+                                const prevLayerNodes = container.querySelectorAll(`.edge-to-${layerIndex}-${i}`);
+                                prevLayerNodes.forEach(edge => {
+                                    edge.style.backgroundColor = '#ff5722';
+                                    edge.style.opacity = '0.7';
+                                });
+                            }
+                        });
+                        
+                        nodeElement.addEventListener('mouseout', function() {
+                            this.style.backgroundColor = layerIndex === 0 ? '#5c6bc0' : 
+                                                       layerIndex === layers.length - 1 ? '#8e24aa' : '#7986cb';
+                            
+                            // Reset edge colors
+                            if (layerIndex < layers.length - 1) {
+                                const nextLayerNodes = container.querySelectorAll(`.edge-from-${layerIndex}-${i}`);
+                                nextLayerNodes.forEach(edge => {
+                                    edge.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                                    edge.style.opacity = '0.4';
+                                });
+                            }
+                            
+                            if (layerIndex > 0) {
+                                const prevLayerNodes = container.querySelectorAll(`.edge-to-${layerIndex}-${i}`);
+                                prevLayerNodes.forEach(edge => {
+                                    edge.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                                    edge.style.opacity = '0.4';
+                                });
+                            }
+                        });
+                        
+                        container.appendChild(nodeElement);
+                    }
+                });
+                
+                // Create edges between layers
+                for (let layerIndex = 0; layerIndex < layers.length - 1; layerIndex++) {
+                    const currentLayer = layers[layerIndex];
+                    const nextLayer = layers[layerIndex + 1];
+                    
+                    const currentLayerSpacing = containerHeight / (currentLayer.nodes + 1);
+                    const nextLayerSpacing = containerHeight / (nextLayer.nodes + 1);
+                    
+                    for (let i = 0; i < currentLayer.nodes; i++) {
+                        for (let j = 0; j < nextLayer.nodes; j++) {
+                            const edgeElement = document.createElement('div');
+                            edgeElement.classList.add('nn-edge', `edge-from-${layerIndex}-${i}`, `edge-to-${layerIndex+1}-${j}`);
+                            edgeElement.style.position = 'absolute';
+                            edgeElement.style.height = '2px';
+                            edgeElement.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                            edgeElement.style.opacity = '0.4';
+                            edgeElement.style.transformOrigin = 'left center';
+                            edgeElement.style.transition = 'background-color 0.3s ease, opacity 0.3s ease';
+                            
+                            const x1 = horizontalSpacing * (layerIndex + 1);
+                            const y1 = currentLayerSpacing * (i + 1) + 40;
+                            const x2 = horizontalSpacing * (layerIndex + 2);
+                            const y2 = nextLayerSpacing * (j + 1) + 40;
+                            
+                            const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                            
+                            edgeElement.style.width = `${length}px`;
+                            edgeElement.style.left = `${x1}px`;
+                            edgeElement.style.top = `${y1}px`;
+                            edgeElement.style.transform = `rotate(${angle}deg)`;
+                            
+                            container.appendChild(edgeElement);
+                        }
+                    }
+                }
+                
+                // Periodic activation animation
+                setInterval(() => {
+                    // Choose a random input node
+                    const inputNodeIndex = Math.floor(Math.random() * layers[0].nodes);
+                    let currentNodes = [[0, inputNodeIndex]];
+                    
+                    // Activate input node
+                    const inputNode = container.querySelectorAll('.nn-node')[inputNodeIndex];
+                    animateNode(inputNode);
+                    
+                    // Propagate activation through network
+                    for (let layerIndex = 1; layerIndex < layers.length; layerIndex++) {
+                        const nextLayerNodes = [];
+                        
+                        // For each active node in the previous layer
+                        currentNodes.forEach(([prevLayerIndex, prevNodeIndex]) => {
+                            // Choose a subset of nodes to activate in the next layer
+                            const numToActivate = Math.floor(Math.random() * layers[layerIndex].nodes) + 1;
+                            const nodesToActivate = new Set();
+                            
+                            while (nodesToActivate.size < numToActivate) {
+                                nodesToActivate.add(Math.floor(Math.random() * layers[layerIndex].nodes));
+                            }
+                            
+                            nodesToActivate.forEach(nextNodeIndex => {
+                                nextLayerNodes.push([layerIndex, nextNodeIndex]);
+                                
+                                // Get the edge
+                                const edge = container.querySelector(`.edge-from-${prevLayerIndex}-${prevNodeIndex}.edge-to-${layerIndex}-${nextNodeIndex}`);
+                                
+                                // Animate edge
+                                setTimeout(() => {
+                                    if (edge) {
+                                        edge.style.backgroundColor = '#64ffda';
+                                        edge.style.opacity = '0.8';
+                                        
+                                        setTimeout(() => {
+                                            edge.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                                            edge.style.opacity = '0.4';
+                                        }, 300);
+                                    }
+                                }, layerIndex * 200);
+                                
+                                // Animate node
+                                const nodeIndex = layers.slice(0, layerIndex).reduce((sum, layer) => sum + layer.nodes, 0) + nextNodeIndex;
+                                const node = container.querySelectorAll('.nn-node')[nodeIndex];
+                                
+                                setTimeout(() => {
+                                    animateNode(node);
+                                }, layerIndex * 200 + 100);
+                            });
+                        });
+                        
+                        currentNodes = nextLayerNodes;
+                    }
+                }, 3000);
+                
+                function animateNode(node) {
+                    if (node) {
+                        node.style.boxShadow = '0 0 10px #64ffda';
+                        node.style.backgroundColor = '#64ffda';
+                        
+                        setTimeout(() => {
+                            node.style.boxShadow = 'none';
+                            node.style.backgroundColor = '';
+                        }, 500);
+                    }
+                }
+            }
+            
+            // Initialize visualizations
+            createNeuralNetworkVisualization();
+        });
+
+         
+    </script>
+</body>
+</html>
